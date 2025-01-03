@@ -6,18 +6,18 @@ services:
     startCommand: "python app.py"
     envVars:
       - key: TELEBOT_API_TOKEN
-        fromSecret: TELEBOT_API_TOKEN
+      sync: false
       - key: FOMO_SITE
-        fromSecret: FOMO_SITE
+      sync: false
       - key: FOMO_TWITTER
-        fromSecret: FOMO_TWITTER
+      sync: false
       - key: FOMO_TELEGRAM
-        fromSecret: FOMO_TELEGRAM
+      sync: false
       - key: BOT_LINK
-        fromSecret: BOT_LINK
+      sync: false
       - key: CHANNEL_ID
-        fromSecret: CHANNEL_ID
+      sync: false
       - key: RECIPIENT_PUBLIC_KEY
-        fromSecret: RECIPIENT_PUBLIC_KEY
+      sync: false
       - key: FOMO_IMG
-        fromSecret: FOMO_IMG
+      sync: false
