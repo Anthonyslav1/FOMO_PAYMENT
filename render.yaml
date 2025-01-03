@@ -1,0 +1,24 @@
+services:
+  - type: web
+    name: fomo-bot
+    env: python
+    plan: free  # Change to the appropriate plan based on your needs
+    buildCommand: "pip install -r requirements.txt"
+    startCommand: "python app.py"  # Update app.py if the entry point file has a different name
+    envVars:
+      - key: TELEBOT_API_TOKEN
+        sync: false
+      - key: FOMO_SITE
+        sync: false
+      - key: FOMO_TWITTER
+        sync: false
+      - key: FOMO_TELEGRAM
+        sync: false
+      - key: BOT_LINK
+        sync: false
+      - key: CHANNEL_ID
+        sync: false
+      - key: RECIPIENT_PUBLIC_KEY
+        sync: false
+      - key: FOMO_IMG
+        sync: false
