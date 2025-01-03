@@ -1,24 +1,23 @@
 services:
-  - type: web
-    name: fomo-bot
+  - type: worker
+    name: telegram-bot
     env: python
-    plan: free  # Change to the appropriate plan based on your needs
     buildCommand: "pip install -r requirements.txt"
-    startCommand: "python app.py"  # Update app.py if the entry point file has a different name
+    startCommand: "python app.py"
     envVars:
       - key: TELEBOT_API_TOKEN
-        sync: false
+        fromSecret: TELEBOT_API_TOKEN
       - key: FOMO_SITE
-        sync: false
+        fromSecret: FOMO_SITE
       - key: FOMO_TWITTER
-        sync: false
+        fromSecret: FOMO_TWITTER
       - key: FOMO_TELEGRAM
-        sync: false
+        fromSecret: FOMO_TELEGRAM
       - key: BOT_LINK
-        sync: false
+        fromSecret: BOT_LINK
       - key: CHANNEL_ID
-        sync: false
+        fromSecret: CHANNEL_ID
       - key: RECIPIENT_PUBLIC_KEY
-        sync: false
+        fromSecret: RECIPIENT_PUBLIC_KEY
       - key: FOMO_IMG
-        sync: false
+        fromSecret: FOMO_IMG
