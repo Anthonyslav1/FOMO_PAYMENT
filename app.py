@@ -11,6 +11,7 @@ import schedule
 from collections import deque
 import os
 from dotenv import load_dotenv
+from flask import Flask
 
 # Load environment variables from .env file
 load_dotenv()
@@ -396,7 +397,13 @@ def submit_coin(message):
         "Use the format:\n`Coin Name - Address - Link`",
         reply_markup=markup
     )
+app = Flask(__name__)
+@app.route('/')
+def home():
+    return "Hello, Render"
 
 if __name__ == '__main__':
     bot.polling()
-
+    port = int(os.environ.get("PORT", 8000))
+    # Start the Flask app
+    app.run(host="0.0.0.0", port=port)
