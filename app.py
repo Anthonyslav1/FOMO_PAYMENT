@@ -33,6 +33,18 @@ user_selected_plans = {}
 used_hashes = {}
 active_posts = {}
 
+def delete_file_after_duration(file_path, duration):
+    """Delete a file after a specified duration."""
+    def delete_file():
+        if os.path.exists(file_path):
+            try:
+                os.remove(file_path)
+                print(f"File {file_path} deleted successfully.")
+            except Exception as e:
+                print(f"Error deleting file {file_path}: {e}")
+
+    threading.Timer(duration, delete_file).start()
+
 
 class FOMOGateway:
     def __init__(self):
@@ -55,6 +67,7 @@ class FOMOGateway:
         qr_code = pyqrcode.create(solana_pay_url)
         qr_code_file = f'payment_qr_{chat_id}_{plan}.png'
         qr_code.png(qr_code_file, scale=8)
+        delete_file_after_duration(qr_code_file, 7200)
 
         return solana_pay_url, qr_code_file, amount_sol
 
@@ -137,7 +150,6 @@ def handle_coin_submission(call):
         return
 
     bot.send_message(chat_id, "Please enter your coin details in the format: `Coin Name - Address - Link`")
-tt
 @bot.message_handler(func=lambda message: message.text and "-" in message.text)
 def process_coin_details(message):
     chat_id = message.chat.id
@@ -306,6 +318,7 @@ def process_pending_submission(chat_id):
         if post_message and hasattr(post_message, "message_id"):
             active_posts[chat_id] = post_message.message_id
             # Schedule deletion
+            bot.pin_chat_message(CHANNEL_ID, post_message.message_id, disable_notification=True)
             threading.Thread(target=delete_post_after_duration, args=(chat_id, user_selected_plans[chat_id])).start()
             del user_submissions[chat_id]
             del user_selected_plans[chat_id]
